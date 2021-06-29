@@ -21,7 +21,7 @@ import * as Yup from "yup";
 import CIcon from "@coreui/icons-react";
 import Swal from "sweetalert2";
 import { register } from "src/js/api";
-import { getAccounts } from "src/js/blockchain";
+import { getAccounts, blockRegister } from "src/js/blockchain";
 
 const Register = (props) => {
   const { setUser } = props;
@@ -78,22 +78,25 @@ const Register = (props) => {
       values.publicAddress = publicAddress;
       register(values)
         .then((res) => {
-          setUser(res.data);
-          Swal.fire({
-            icon: "success",
-            title: "Regeister success",
-            text: `Wellcome ${res.data.fullName}`
+          blockRegister(publicAddress).then((result) => {
+            setUser(res.data);
+            Swal.fire({
+              icon: "success",
+              title: "Regeister success",
+              text: `Wellcome ${res.data.fullName}`,
+            });
+            window.location.reload();
           });
-          window.location.reload();
+          return res;
         })
         .catch((e) => {
           setSubmitting(false);
           Swal.fire({
             icon: "error",
             title: "Oops...Register failed!",
-            text: `Error: ${e.message}`
+            text: `Error: ${e.message}`,
           });
-          console.log("error");
+          console.log(e);
         });
     },
   });

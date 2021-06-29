@@ -17,23 +17,19 @@ const Login = (props) => {
   const { setUser } = props;
   const clickHandler = async () => {
     const accounts = await getAccounts();
-    console.log(accounts);
     let address = accounts[0].toString();
-    console.log(address);
-    let { nonce } = await getNonce(address);
-    console.log(nonce);
-    let message = "I am signing my one-time nonce: " + nonce.toString();
-    sign(address, message).then(({ publicAddress, signature }) => {
-      login(publicAddress, signature).then((res) => {
-        if (res.status === 200) {
+    try {
+      let { nonce } = await getNonce(address);
+      let message = "I am signing my one-time nonce: " + nonce.toString();
+      sign(address, message).then(({ publicAddress, signature }) => {
+        login(publicAddress, signature).then((res) => {
           setUser(res.data);
-        }
-        else {
-          Swal.fire("Thông báo", "Đăng nhập không thành công", "error");
-        }
-        console.log(res.data);
+          console.log(res.data);
+        });
       });
-    });
+    } catch (e) {
+      Swal.fire("Thông báo", "User không tồn tại", "error");
+    }
   };
 
   return (

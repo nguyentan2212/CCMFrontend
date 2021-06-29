@@ -23,6 +23,12 @@ import {
   unlockUser,
 } from "src/js/api";
 import { getToken } from "src/js/localStorageToken";
+import {
+  blockLock,
+  blockUnlock,
+  blockPromote,
+  blockDemote,
+} from "src/js/blockchain";
 
 const getRole = (role) => {
   switch (role) {
@@ -56,15 +62,23 @@ const Users = () => {
       showCancelButton: true,
     }).then((result) => {
       if (result.isConfirmed) {
-        promoteUser(item.id).then((status) => {
-          if (status === 200) {
-            tempuser.role = "admin";
-            setUsers(tempUsers);
-            Swal.fire("Thông báo", "Đã cấp quyền admin thành công", "success");
-          } else {
-            Swal.fire("Thông báo", "Cấp quyền admin không thành công", "error");
-          }
-        });
+        promoteUser(item.id)
+          .then((status) => {
+            blockPromote(user.publicAddress, item.publicAddress).then(
+              (result) => {
+                tempuser.role = "admin";
+                setUsers(tempUsers);
+                Swal.fire(
+                  "Thông báo",
+                  "Đã cấp quyền admin thành công",
+                  "success"
+                );
+              }
+            );
+          })
+          .catch((e) =>
+            Swal.fire("Thông báo", "Cấp quyền admin không thành công", "error")
+          );
       }
     });
   };
@@ -79,19 +93,23 @@ const Users = () => {
       showCancelButton: true,
     }).then((result) => {
       if (result.isConfirmed) {
-        demoteUser(item.id).then((status) => {
-          if (status === 200) {
-            tempuser.role = "staff";
-            setUsers(tempUsers);
-            Swal.fire("Thông báo", "Đã tước quyền admin thành công", "success");
-          } else {
-            Swal.fire(
-              "Thông báo",
-              "Tước quyền admin không thành công",
-              "error"
+        demoteUser(item.id)
+          .then((status) => {
+            blockDemote(user.publicAddress, item.publicAddress).then(
+              (result) => {
+                tempuser.role = "staff";
+                setUsers(tempUsers);
+                Swal.fire(
+                  "Thông báo",
+                  "Đã tước quyền admin thành công",
+                  "success"
+                );
+              }
             );
-          }
-        });
+          })
+          .catch((e) =>
+            Swal.fire("Thông báo", "Tước quyền admin không thành công", "error")
+          );
       }
     });
   };
@@ -106,15 +124,17 @@ const Users = () => {
       showCancelButton: true,
     }).then((result) => {
       if (result.isConfirmed) {
-        lockUser(item.id).then((status) => {
-          if (status === 200) {
-            tempuser.isActive = false;
-            setUsers(tempUsers);
-            Swal.fire("Thông báo", "Đã khóa tài khoản thành công", "success");
-          } else {
-            Swal.fire("Thông báo", "Khóa tài khoản không thành công", "error");
-          }
-        });
+        lockUser(item.id)
+          .then((status) => {
+            blockLock(user.publicAddress, item.publicAddress).then((result) => {
+              tempuser.isActive = false;
+              setUsers(tempUsers);
+              Swal.fire("Thông báo", "Đã khóa tài khoản thành công", "success");
+            });
+          })
+          .catch((e) =>
+            Swal.fire("Thông báo", "Khóa tài khoản không thành công", "error")
+          );
       }
     });
   };
@@ -129,23 +149,27 @@ const Users = () => {
       showCancelButton: true,
     }).then((result) => {
       if (result.isConfirmed) {
-        unlockUser(item.id).then((status) => {
-          if (status === 200) {
-            tempuser.isActive = true;
-            setUsers(tempUsers);
-            Swal.fire(
-              "Thông báo",
-              "Đã mở khóa tài khoản thành công",
-              "success"
+        unlockUser(item.id)
+          .then((status) => {
+            blockUnlock(user.publicAddress, item.publicAddress).then(
+              (result) => {
+                tempuser.isActive = true;
+                setUsers(tempUsers);
+                Swal.fire(
+                  "Thông báo",
+                  "Đã mở khóa tài khoản thành công",
+                  "success"
+                );
+              }
             );
-          } else {
+          })
+          .catch((e) =>
             Swal.fire(
               "Thông báo",
               "Mở khóa tài khoản không thành công",
               "error"
-            );
-          }
-        });
+            )
+          );
       }
     });
   };
@@ -216,9 +240,17 @@ const Users = () => {
                           {user.role === "admin" && item.id !== user.id && (
                             <div>
                               {item.isActive ? (
-                                <CDropdownItem onClick={() => lockHandler(item)}>Khoá</CDropdownItem>
+                                <CDropdownItem
+                                  onClick={() => lockHandler(item)}
+                                >
+                                  Khoá
+                                </CDropdownItem>
                               ) : (
-                                <CDropdownItem onClick={() => unlockHandler(item)}>Mở khoá</CDropdownItem>
+                                <CDropdownItem
+                                  onClick={() => unlockHandler(item)}
+                                >
+                                  Mở khoá
+                                </CDropdownItem>
                               )}
 
                               {item.role === "admin" ? (

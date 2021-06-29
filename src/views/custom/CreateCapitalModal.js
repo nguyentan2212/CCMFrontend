@@ -20,6 +20,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { getToken } from "src/js/localStorageToken";
 import { createCapital } from "src/js/api";
+import { blockCreateCapital } from "src/js/blockchain";
 import Swal from "sweetalert2";
 
 function CreateCapitalModal(props) {
@@ -57,18 +58,23 @@ function CreateCapitalModal(props) {
   const formik = useFormik({
     initialValues,
     validationSchema: createSchema,
-    onSubmit: (values, { setSubmitting }) => {
+    onSubmit: (values, { setSubmitting, resetForm }) => {
       setSubmitting(false);
       enableLoading();
-      createCapital(values).then((status) => {
-        if (status === 200) {
-          Swal.fire("Thông báo", "Tạo mới khoản vốn thành công", "success");
-          setUpdate(!update);
-        } else {
-          Swal.fire("Thông báo", "Tạo mới khoản vốn thất bại", "error");
-        }
-        disableLoading();
-      });
+      createCapital(values)
+        .then((res) => {
+          blockCreateCapital(getToken().publicAddress, res.data).then(
+            (result) => {
+              Swal.fire("Thông báo", "Tạo mới khoản vốn thành công", "success");
+              setUpdate(!update);
+              disableLoading();
+              resetForm(initialValues);
+            }
+          );
+        })
+        .catch((e) =>
+          Swal.fire("Thông báo", "Tạo mới khoản vốn thất bại", "error")
+        );
     },
   });
 

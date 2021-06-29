@@ -13,13 +13,18 @@ import {
 import moment from "moment";
 import Swal from "sweetalert2";
 import CapitalModal from "./CapitalModal";
+import { getToken } from "src/js/localStorageToken";
 import { cancelCapital } from "src/js/api";
+import { blockCreateCapital, blockCancel } from "src/js/blockchain";
 
 function CapitalsCard(props) {
   const { capitals, setCapitals, className, title, children } = props;
 
   const [visible, setVisible] = useState(false);
   const [capital, setCapital] = useState(null);
+  const user = getToken();
+
+  const syncData = process.env.REACT_APP_SYNC_DATA;
 
   var formatter = new Intl.NumberFormat("vi-VN", {
     style: "currency",
@@ -37,15 +42,17 @@ function CapitalsCard(props) {
       showCancelButton: true,
     }).then((result) => {
       if (result.isConfirmed) {
-        cancelCapital(tempCapital.id).then((status) => {
-          if (status === 200) {
-            tempCapital.status = "Cancelled";
-            setCapitals(tempCapitals);
-            Swal.fire("Thông báo", "Đã huỷ khoản vốn", "success");
-          } else {
-            Swal.fire("Thông báo", "Huỷ khoản vốn không thành công", "error");
-          }
-        });
+        cancelCapital(tempCapital.id)
+          .then((status) => {
+            blockCancel(user.publicAddress, tempCapital.id).then((result) => {
+              tempCapital.status = "Cancelled";
+              setCapitals(tempCapitals);
+              Swal.fire("Thông báo", "Đã huỷ khoản vốn", "success");
+            });
+          })
+          .catch((e) =>
+            Swal.fire("Thông báo", "Huỷ khoản vốn không thành công", "error")
+          );
       }
     });
   };
@@ -116,6 +123,15 @@ function CapitalsCard(props) {
                       Hành động
                     </CDropdownToggle>
                     <CDropdownMenu>
+                      {syncData && (
+                        <CDropdownItem
+                          onClick={() =>
+                            blockCreateCapital(user.publicAddress, item)
+                          }
+                        >
+                          Sync data
+                        </CDropdownItem>
+                      )}
                       <CDropdownItem onClick={() => moreInfoHandler(item)}>
                         Chi tiết
                       </CDropdownItem>

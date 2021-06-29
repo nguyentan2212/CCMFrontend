@@ -1,0 +1,123 @@
+{
+	"compiler": {
+		"version": "0.8.4+commit.c7e474f2"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					}
+				],
+				"name": "cancel",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "title",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "des",
+						"type": "string"
+					},
+					{
+						"internalType": "uint8",
+						"name": "ctype",
+						"type": "uint8"
+					},
+					{
+						"internalType": "uint8",
+						"name": "casset",
+						"type": "uint8"
+					},
+					{
+						"internalType": "uint256",
+						"name": "value",
+						"type": "uint256"
+					}
+				],
+				"name": "createCapital",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getCapitalCounter",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"CapitalManager.sol": "CapitalManager"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"CapitalManager.sol": {
+			"keccak256": "0x162fb9c1280f788bad760ceb02b1864af6debf6a998190d5f4e53da4e99d7787",
+			"license": "UNLICENSED",
+			"urls": [
+				"bzz-raw://ab6a2c5cd6025c0f9e0d80d92a24377d55f4738a0449aff3249ad5796e8a570b",
+				"dweb:/ipfs/QmdL1RjnWzJZbXXp7AzcErga6tozPq3yyXPPHZXRGezuBz"
+			]
+		},
+		"UserManager.sol": {
+			"keccak256": "0xb845b6916a046df408b1842a8ccb5bfb7c2ef0bbb3950e0dc5b2bd07d94755f9",
+			"license": "UNLICENSED",
+			"urls": [
+				"bzz-raw://6269752bdb5f570d5070135a10010762328a202e2e6b760baf4a3545ba174d93",
+				"dweb:/ipfs/QmUb5cKf4gCpBQLavZ9t3EG9fB8RP1vvKJfjxS489L91rD"
+			]
+		}
+	},
+	"version": 1
+}

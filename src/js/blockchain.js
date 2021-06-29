@@ -1,5 +1,13 @@
-var Web3 = require("web3");
+const Web3 = require("web3");
+var Contract = require("web3-eth-contract");
+const UserManagerJson = require("../contracts/artifacts/UserManager.json");
+const CapitalManagerJson = require("../contracts/artifacts/CapitalManager.json");
+
+const UserManagerContract = "0xcFF9C6B47FCA10Dfe4e83de887Ebe39dC219af83";
+const CapitalManagerContract = "0x2cE1Ad3fbd444BE0C5FC2396eF2D8F35d3F60408";
 var web3Provider = null;
+var userManager = null;
+var capitalManager = null;
 
 const createWeb3 = async () => {
   if (window.ethereum) {
@@ -25,6 +33,15 @@ const createWeb3 = async () => {
 createWeb3();
 const web3 = new Web3(web3Provider);
 
+const initContracts = () => {
+  Contract.setProvider(web3Provider);
+
+  userManager = new Contract(UserManagerJson.abi, UserManagerContract);
+  capitalManager = new Contract(CapitalManagerJson.abi, CapitalManagerContract);
+};
+
+initContracts();
+
 export const getAccounts = () => {
   let accounts = web3.eth.getAccounts().then(function (acc) {
     return acc;
@@ -43,4 +60,60 @@ export const sign = (publicAddress, message) => {
       }
     )
   );
+};
+
+export const blockRegister = (userAddress) => {
+  const result = userManager.methods.register().send({ from: userAddress });
+  return result;
+};
+
+export const blockLock = (userAddress, lockedAddress) => {
+  const result = userManager.methods
+    .lock(lockedAddress)
+    .send({ from: userAddress });
+  return result;
+};
+
+export const blockUnlock = (userAddress, unlockedAddress) => {
+  const result = userManager.methods
+    .unlock(unlockedAddress)
+    .send({ from: userAddress });
+  return result;
+};
+
+export const blockPromote = (userAddress, promotedAddress) => {
+  console.log(userAddress, promotedAddress);
+  const result = userManager.methods
+    .promote(promotedAddress)
+    .send({ from: userAddress });
+  return result;
+};
+
+export const blockDemote = (userAddress, demotedAddress) => {
+  const result = userManager.methods
+    .demote(demotedAddress)
+    .send({ from: userAddress });
+  return result;
+};
+
+export const blockCreateCapital = (userAddress, capital) => {
+  let type = capital.type === "Equity" ? 1 : 0;
+  let asset = capital.asset === "ShortTermAsset" ? 0 : 1;
+
+  const result = capitalManager.methods
+    .createCapital(
+      capital.id,
+      capital.title,
+      capital.description,
+      type,
+      asset,
+      capital.value
+    )
+    .send({ from: userAddress });
+  return result;
+};
+
+export const blockCancel = (userAddress, id) => {
+  const result = capitalManager.methods.cancel(id).send({ from: userAddress });
+  return result;
 };

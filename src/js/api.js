@@ -131,7 +131,7 @@ export const createCapital = (capital) => {
       type: parseInt(capital.type),
       asset: parseInt(capital.asset),
     })
-    .then(({ status }) => status)
+    .then((res) => res)
     .catch((error) => {
       console.log(error);
       return error.status;
