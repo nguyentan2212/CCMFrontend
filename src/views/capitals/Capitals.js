@@ -32,7 +32,7 @@ function Capitals() {
             className="w-100"
           >
             <div className="d-flex justify-content-lg-between">
-              <h4>Danh sách nguồn vốn</h4>
+              <h4>Danh sách vốn</h4>
               <CButton
                 color="primary"
                 size="md"

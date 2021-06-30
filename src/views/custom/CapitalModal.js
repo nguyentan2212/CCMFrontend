@@ -17,9 +17,9 @@ const formatter = new Intl.NumberFormat("vi-VN", {
 const getAssetString = (asset) => {
   switch (asset) {
     case "ShortTermAsset":
-      return "Tài sản ngắn hạn";
+      return "Nguồn vốn ngắn hạn";
     case "LongTermAsset":
-      return "Tài sản dài hạn";
+      return "Nguồn vốn dài hạn";
     default:
       return "Lỗi hiển thị";
   }
@@ -28,7 +28,7 @@ const getAssetString = (asset) => {
 const getCapitalTypeString = (type) => {
   switch (type) {
     case "Equity":
-      return "Vốn chủ sở hữu";
+      return "Vốn cố định";
     case "Working":
       return "Vốn lưu động";
     default:
@@ -76,7 +76,7 @@ function CapitalModal(props) {
               </CCol>
               <CCol md={4}>
                 <div className="d-flex flex-column">
-                  <p className="font-weight-bold mb-1">Loại tài sản</p>
+                  <p className="font-weight-bold mb-1">Loại nguồn vốn</p>
                   <p>{getAssetString(capital.asset)}</p>
                 </div>
               </CCol>

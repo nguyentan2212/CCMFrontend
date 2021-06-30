@@ -77,7 +77,7 @@ const Dashboard = () => {
           <CRow>
             <CCol>
               <CCard>
-                <CCardHeader>Quản lý {" & "} Chi Tiêu</CCardHeader>
+                <CCardHeader>Cơ cấu vốn {" & "} Top người dùng</CCardHeader>
                 <CCardBody>
                   <CRow>
                     <CCol xs="12" md="6" xl="6">
@@ -85,13 +85,13 @@ const Dashboard = () => {
                       <div className="chart-wrapper">
                         <CapitalDoughnut
                           data={[statistic.totalWorking, statistic.totalEquity]}
-                          labels={["Lưu động", "Chủ sở hữu"]}
+                          labels={["Lưu động", "Cố định"]}
                         />
                       </div>
                       <hr />
                     </CCol>
                     <CCol xs="12" md="6" xl="6">
-                      <h4>Cơ cấu theo loại tài sản</h4>
+                      <h4>Cơ cấu theo nguồn vốn</h4>
                       <div className="chart-wrapper">
                         <CapitalDoughnut
                           data={[

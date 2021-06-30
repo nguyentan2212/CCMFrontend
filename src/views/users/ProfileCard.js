@@ -51,7 +51,7 @@ function ProfileCard({ user }) {
   return (
     <CCard>
       <CCardHeader>
-        <h3>Profile</h3>
+        <h3>Tài khoản</h3>
       </CCardHeader>
       <CCardBody>
         {

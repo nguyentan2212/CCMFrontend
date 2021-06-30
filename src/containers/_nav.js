@@ -18,7 +18,7 @@ const _nav = [
   },
   {
     _tag: 'CSidebarNavItem',
-    name: 'Danh sách nguồn vốn',
+    name: 'Danh sách vốn',
     to: '/capitals',
     icon: 'cil-drop',
   },

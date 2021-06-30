@@ -24,7 +24,7 @@ const WidgetsOverview = (props) => {
         <CWidgetDropdown
           color="gradient-primary"
           header={formatter.format(totalCapital)}
-          text="Tổng số vốn"
+          text="Tổng giá trị"
           footerSlot={
             <ChartLineSimple
               pointed
@@ -75,7 +75,7 @@ const WidgetsOverview = (props) => {
         <CWidgetDropdown
           color="gradient-warning"
           header={formatter.format(totalEquity)}
-          text="Vốn chủ sở hữu"
+          text="Vốn cố định"
           footerSlot={
             <ChartLineSimple
               className="mt-3"

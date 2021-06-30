@@ -71,7 +71,7 @@ function CapitalsCard(props) {
             fields={[
               { key: "title", label: "Tiêu đề" },
               { key: "value", label: "Giá trị" },
-              { key: "asset", label: "Loại tài sản" },
+              { key: "asset", label: "Loại nguồn vốn" },
               { key: "type", label: "Loại vốn" },
               { key: "creationDate", label: "Ngày tạo" },
               { key: "status", label: "Trạng thái" },
@@ -88,13 +88,13 @@ function CapitalsCard(props) {
               asset: (item) => (
                 <td>
                   {item.asset === "ShortTermAsset"
-                    ? "Tài sản ngắn hạn"
-                    : "Tài sản dài hạn"}
+                    ? "Nguồn vốn ngắn hạn"
+                    : "Nguồn vốn dài hạn"}
                 </td>
               ),
               type: (item) => (
                 <td>
-                  {item.type === "Equity" ? "Vốn chủ sở hữu" : "Vốn lưu động"}
+                  {item.type === "Equity" ? "Vốn cố định" : "Vốn lưu động"}
                 </td>
               ),
               status: (item) => (

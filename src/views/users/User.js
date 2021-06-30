@@ -49,7 +49,7 @@ const User = ({ match }) => {
             <CapitalsCard
               capitals={capitals}
               setCapitals={setCapitals}
-              title="Capitals Created"
+              title="Vốn đã tạo"
             />
           </div>
         </div>

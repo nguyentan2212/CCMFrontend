@@ -165,7 +165,7 @@ function CreateCapitalModal(props) {
             </CCol>
             <CCol lg={4}>
               <CFormGroup>
-                <CLabel htmlFor="app-asset">Loại tài sản</CLabel>
+                <CLabel htmlFor="app-asset">Loại nguồn vốn</CLabel>
                 <CSelect
                   type="text"
                   id="app-asset"
@@ -174,9 +174,9 @@ function CreateCapitalModal(props) {
                   onChange={(e) => assetChangeHandler(e)}
                   value={formik.values.asset}
                 >
-                  <option value="2">Loại tài sản..</option>
-                  <option value="1">Tài sản dài hạn</option>
-                  <option value="0">Tài sản ngắn hạn</option>
+                  <option value="2">Loại nguồn vốn..</option>
+                  <option value="1">Nguồn vốn dài hạn</option>
+                  <option value="0">Nguồn vốn ngắn hạn</option>
                 </CSelect>
                 <CInvalidFeedback className="help-block">
                   {formik.errors.asset}
@@ -196,7 +196,7 @@ function CreateCapitalModal(props) {
                 >
                   <option value="2">Loại vốn..</option>
                   <option value="1">Vốn lưu động</option>
-                  <option value="0">Vốn chủ sở hữu</option>
+                  <option value="0">Vốn cố định</option>
                 </CSelect>
                 <CInvalidFeedback className="help-block">
                   {formik.errors.type}

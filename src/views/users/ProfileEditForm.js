@@ -84,7 +84,7 @@ function ProfileEditForm({ user, setUser }) {
   return (
     <CForm onSubmit={formik.handleSubmit} noValidate>
       <CCard>
-        <CCardHeader><h3>Edit Profile</h3></CCardHeader>
+        <CCardHeader><h3>Cập nhật tài khoản</h3></CCardHeader>
         <CCardBody>
           <CFormGroup>
             <CLabel htmlFor="app-fullName">Họ và tên</CLabel>
@@ -150,7 +150,7 @@ function ProfileEditForm({ user, setUser }) {
             {loading && <CSpinner color="primary" className="ml-2" />}
           </CButton>
           <CButton color="primary" type="submit" disabled={loading}>
-            <span> Cập nhật Profile</span>
+            <span> Cập nhật</span>
             {loading && <CSpinner color="light" className="ml-2" />}
           </CButton>
         </CCardFooter>
